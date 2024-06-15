@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Producto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Título del producto</ion-label>
+      <ion-input [(ngModel)]="tituloProducto"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Descripción del producto</ion-label>
+      <ion-textarea [(ngModel)]="descripcionProducto"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label>Categoría</ion-label>
+      <ion-select [(ngModel)]="categoriaProducto">
+        <ion-select-option value="categoria1">Categoría 1</ion-select-option>
+        <ion-select-option value="categoria2">Categoría 2</ion-select-option>
+        <ion-select-option value="categoria3">Categoría 3</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Imágenes del producto</ion-label>
+      <ion-button expand="block" (click)="takePicture()">Tomar Foto</ion-button>
+      <img *ngIf="picture" [src]="picture" alt="Imagen del producto">
+    </ion-item>
+  </ion-list>
+</ion-content>

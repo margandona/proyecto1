@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Buzón de Mensajes
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Buzón de Mensajes</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-item *ngFor="let message of messages" [ngStyle]="{'background': message.color}">
+      <ion-avatar slot="start">
+        <ion-icon name="person-circle" style="font-size: 2em;"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ message.label }}</h2>
+        <h3>{{ message.title }}</h3>
+        <p>{{ message.description }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button fill="clear">
+          <ion-icon name="settings"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+</ion-content>
