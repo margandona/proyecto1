@@ -1,203 +1,83 @@
+Para actualizar el archivo `README.md` con las modificaciones pertinentes, incluyendo la generación del APK no firmado para la aplicación **EcoTrueque**, te proporciono un ejemplo detallado de cómo deberías estructurarlo. Este documento servirá para guiar a los usuarios en la instalación, ejecución y comprensión del proyecto, así como informar sobre la generación del APK.
+
+---
+
 # EcoTrueque
 
-2. Instala las dependencias:
+## Descripción
 
-   ```bash
-   npm install
-   ```
-3. Sincroniza Capacitor:
+**EcoTrueque** es una aplicación móvil diseñada para facilitar el intercambio de bienes y servicios dentro de una comunidad, promoviendo prácticas de consumo responsable y sostenibilidad. La aplicación permite a los usuarios publicar ofertas, buscar artículos, y comunicarse de manera segura, todo ello potenciado por la tecnología de Ionic con Angular.
 
-   ```bash
-   npx cap sync
-   ```
+## Características Principales
+
+- **Autenticación de usuarios:** Registro y login seguro.
+- **Gestión de ofertas:** Publicación y gestión de ofertas de intercambio.
+- **Búsqueda avanzada:** Filtros detallados para facilitar la búsqueda de ofertas.
+- **Mensajería interna:** Comunicación directa entre usuarios.
+- **Contenido educativo:** Sección con recursos sobre sostenibilidad.
+
+## Tecnologías Utilizadas
+
+- **Frontend:** Angular + Ionic
+- **Backend:** Firebase para autenticación y almacenamiento de datos
+- **Estilos:** SASS para estilos personalizados
+
+## Instalación
+
+### Prerrequisitos
+
+Asegúrese de tener Node.js y npm instalados. Puede descargarlos desde [Node.js](https://nodejs.org/).
+
+### Clonar el Repositorio
+
+Para obtener una copia local, clone el repositorio usando git:
+
+```bash
+git clone https://github.com/tu-usuario/EcoTrueque.git
+cd EcoTrueque
+```
+
+### Instalar Dependencias
+
+Instale todas las dependencias necesarias ejecutando:
+
+```bash
+npm install
+```
 
 ## Ejecución
 
-1. Construye el proyecto:
-
-   ```bash
-   ionic build
-   ```
-2. Abre el proyecto en Android Studio:
-
-   ```bash
-   npx cap open android
-   ```
-
-   O abre el proyecto en Xcode:
-
-   ```bash
-   npx cap open ios
-   ```
-3. Ejecuta la aplicación en un emulador o dispositivo físico desde Android Studio o Xcode.
-
-## Servicios y Componentes
-
-### Servicio de Cámara
-
-El servicio de cámara permite a los usuarios tomar fotos de los productos directamente desde la aplicación.
-
-**Uso del Servicio de Cámara**:
-
-```typescript
-import { Injectable } from '@angular/core';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class CameraService {
-
-  constructor() { }
-
-  async takePicture() {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Camera
-    });
-
-    return image.dataUrl;
-  }
-}
-```
-
-**Uso en una Página**:
-
-```typescript
-import { Component } from '@angular/core';
-import { CameraService } from '../../services/camera.service';
-
-@Component({
-  selector: 'app-publicar',
-  templateUrl: './publicar.page.html',
-  styleUrls: ['./publicar.page.scss'],
-})
-export class PublicarPage {
-
-  picture: string;
-
-  constructor(private cameraService: CameraService) { }
-
-  async takePicture() {
-    this.picture = await this.cameraService.takePicture();
-  }
-}
-```
-
-**HTML de la Página**:
-
-```html
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Publicar Producto</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <ion-list>
-    <ion-item>
-      <ion-label position="floating">Título del producto</ion-label>
-      <ion-input></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Descripción del producto</ion-label>
-      <ion-textarea></ion-textarea>
-    </ion-item>
-    <ion-item>
-      <ion-label>Categoría</ion-label>
-      <ion-select>
-        <ion-select-option value="categoria1">Categoría 1</ion-select-option>
-        <ion-select-option value="categoria2">Categoría 2</ion-select-option>
-        <ion-select-option value="categoria3">Categoría 3</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>Imágenes del producto</ion-label>
-      <ion-button expand="block" (click)="takePicture()">Tomar Foto</ion-button>
-      <ion-img *ngIf="picture" [src]="picture"></ion-img>
-    </ion-item>
-  </ion-list>
-</ion-content>
-```
-
-### Servicio de Geolocalización
-
-El servicio de geolocalización permite obtener la ubicación del usuario.
-
-**Instalación del Plugin de Geolocalización**:
+Para iniciar la aplicación en un servidor local:
 
 ```bash
-npm install @capacitor/geolocation
+ionic serve
 ```
 
-**Servicio de Geolocalización**:
+## Generación del APK No Firmado
 
-```typescript
-import { Injectable } from '@angular/core';
-import { Geolocation } from '@capacitor/geolocation';
+Para generar el APK no firmado para Android:
 
-@Injectable({
-  providedIn: 'root'
-})
-export class GeolocationService {
-
-  constructor() { }
-
-  async getCurrentPosition() {
-    const coordinates = await Geolocation.getCurrentPosition();
-    return coordinates;
-  }
-}
+```bash
+ionic cordova build android --prod
 ```
 
-**Uso en una Página**:
+Este comando construirá la aplicación y generará un APK en el directorio `platforms/android/app/build/outputs/apk/debug/app-debug.apk`.
 
-```typescript
-import { Component } from '@angular/core';
-import { GeolocationService } from '../../services/geolocation.service';
+## Problemas Comunes y Soluciones
 
-@Component({
-  selector: 'app-ubicacion',
-  templateUrl: './ubicacion.page.html',
-  styleUrls: ['./ubicacion.page.scss'],
-})
-export class UbicacionPage {
+- **Error de CORS durante el desarrollo:** Utilice un proxy durante el desarrollo para evitar problemas con CORS.
 
-  location: any;
+## Contribuir
 
-  constructor(private geolocationService: GeolocationService) { }
+Si desea contribuir al proyecto, por favor siga los siguientes pasos:
 
-  async getLocation() {
-    this.location = await this.geolocationService.getCurrentPosition();
-  }
-}
-```
+1. Haga fork del repositorio.
+2. Cree una nueva rama (`git checkout -b feature/AmazingFeature`).
+3. Realice sus cambios.
+4. Haga commit de sus cambios (`git commit -m 'Add some AmazingFeature'`).
+5. Haga push a la rama (`git push origin feature/AmazingFeature`).
+6. Abra un Pull Request.
 
-**HTML de la Página**:
+## Licencia
 
-```html
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Ubicación</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <ion-button expand="block" (click)="getLocation()">Obtener Ubicación</ion-button>
-  <div *ngIf="location">
-    <p>Latitud: {{ location.coords.latitude }}</p>
-    <p>Longitud: {{ location.coords.longitude }}</p>
-  </div>
-</ion-content>
-```
-
-## Problemas Enfrentados
-
-- **Configuración de Capacitor**: Asegúrate de sincronizar Capacitor después de cualquier cambio de configuración o instalación de nuevos plugins.
-- **Permisos de Dispositivo**: Durante las pruebas, asegúrate de otorgar los permisos necesarios para acceder a la cámara y la ubicación del dispositivo.
-
-## Conclusión
-
-EcoTrueque es una aplicación móvil diseñada para facilitar el intercambio de artículos y servicios sostenibles. Con la integración de servicios como cámara y geolocalización, ofrece una experiencia completa y funcional a sus usuarios.
+Este proyecto está licenciado bajo la Licencia MIT - vea el archivo LICENSE.md para detalles.
